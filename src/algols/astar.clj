@@ -3,11 +3,11 @@
 
 (def djikstra-heuristic (constantly 0))
 
-(defn astar [heuristic coster goal node next-node]
-  "Manipulates/updates the search space nodes to reflect the A* algorithm.
+(defn astar [heuristic coster goal ^Node node ^Node next-node]
+  "Node processor that manipulates/updates the search space nodes to reflect the A* algorithm.
 
   heuristic - fn that estimates the cost of obtaining/getting to the goal
-  coster - fn that determines the _actual_ cost of getting from the current node to the next-node
+  coster - fn that determines the _actual_ cost of getting from the current state to the next
   goal - that which is to be obtained (hopefully)
   node - current state in the search space
   next-node - next state in the search space"
@@ -47,12 +47,12 @@
 (defn new-search-spec
   "Creates a new search specification to be used for a search.
 
+  node-processor - function that manipulates and analyzes nodes (most should simply use
+                   the 'astar' or 'theta-star' provided)
   state-producer - function that, given a state in the solution
                    space will return all states that are accessible from it
   heuristic - function that will estimate the cost of going from one state to the _goal_ state
   coster - function that will calculate the actual cost of going from one state to the next
-  node-processor - function that manipulates and analyzes nodes (most will simply use
-                   the 'astar' or 'theta-star' functions provided here
   goal-reached? - function for determining when the desired goal state has been achieved"
   ([node-processor state-producer heuristic coster goal-reached?]
    (new-search-spec node-processor state-producer heuristic coster goal-reached?
@@ -85,7 +85,7 @@
        (if-let [parent (:parent node)]
          (recur parent (conj path (:val parent))))))))
 
-(defn search [search-params start-state goal-state]
+(defn search [^SearchSpec search-params start-state goal-state]
   "Search for sequence of states leading from the start state to the goal state."
   (let [{:keys [node-processor state-producer heuristic coster goal-reached? open-map closed-set]} search-params
         start-node (new-node start-state nil 0 (heuristic start-state goal-state))]
