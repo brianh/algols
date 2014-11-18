@@ -15,22 +15,22 @@ A* search can be fully described/defined by the following functions:
 * State producer - function that, given a state, will produce all states that can be accessed from it
 * Heuristic - function that will (under-)estimate the cost associated with getting from a specific
 state to the goal state
-        ```clojure algols.astar/djikstra-heuristic``` (or simply ```Clojure (constantly 0)```) will 
+  * ```` algols.astar/djikstra-heuristic```` (or simply ```` (constantly 0)````) will 
 turn A* into Djikstra's search
 * Coster - function that will exactly produce the cost of moving from one state to the next (not
 necessarily the goal state)
 * Goal-reached? - basis function for the search
 * Node processor/manipulator - function that applies the heuristic & coster fns and 
 manages the costing information for each state/node
-  * ```clojure algols.astar/astar``` is the A* search node manipulator we all know and love
-  * ```clojure algols.astar/theta-star``` allows for skipping/by-passing states by providing a bypassable?
+  * ```` algols.astar/astar```` is the A* search node manipulator we all know and love
+  * ```` algols.astar/theta-star```` allows for skipping/by-passing states by providing a bypassable?
  function that, when ````false```` fails over the the ````astar```` node processor
 
 ### Usage
 
 on the way....
 
-# TODO/FUTURE
+### TODO/FUTURE
 * Play/test more
 * Compare with other A* implementations
 * Think about the current implementation (possible improvements to structure, flow, etc)
@@ -40,7 +40,7 @@ on the way....
 * Don't care for how ````Node```` record leaks out.  May be possible to further de-construct the node
  manipulation to allow greater flexibility (worth it?) or simply hide it behind another fn?
 
-# License
+## License
 
 Copyright © 2014
 
