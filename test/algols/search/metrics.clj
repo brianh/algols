@@ -1,4 +1,4 @@
-(ns algols.metrics)
+(ns algols.search.metrics)
 
 (def sqrt2 (Math/sqrt 2.0))
 

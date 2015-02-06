@@ -1,7 +1,16 @@
-(ns algols.astar
+(ns algols.search.astar
   (:require [clojure.data.priority-map :as pm]))
 
 (def djikstra-heuristic (constantly 0))
+
+(defrecord Node [val parent start-cost goal-est total-cost])
+
+(defn new-node
+  ([val parent]
+   (new-node val parent Double/POSITIVE_INFINITY Double/POSITIVE_INFINITY))
+
+  ([val parent start-cost goal-est]
+   (->Node val parent start-cost goal-est Double/POSITIVE_INFINITY)))
 
 (defn astar [heuristic coster goal ^Node node ^Node next-node]
   "Node processor that manipulates/updates the search space nodes to reflect the A* algorithm.
@@ -66,15 +75,6 @@
 
 (defn new-theta-star-search-spec [bypassable? state-producer heuristic coster goal-reached?]
   (new-search-spec (theta-star bypassable?) state-producer heuristic coster goal-reached?))
-
-(defrecord Node [val parent start-cost goal-est total-cost])
-
-(defn new-node
-  ([val parent]
-   (new-node val parent Double/POSITIVE_INFINITY Double/POSITIVE_INFINITY))
-
-  ([val parent start-cost goal-est]
-   (->Node val parent start-cost goal-est Double/POSITIVE_INFINITY)))
 
 (defn- extract-path
   ([last-node]

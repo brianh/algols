@@ -1,4 +1,4 @@
-(ns algols.protocols)
+(ns algols.search.protocols)
 
 (defprotocol Coster
   (cost [this that] "Cost of going from this state to that state."))

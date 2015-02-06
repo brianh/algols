@@ -1,8 +1,8 @@
-(ns algols.astar-test
+(ns algols.search.astar-test
   (:use clojure.test
-        algols.astar
-        algols.producers
-        algols.metrics))
+        algols.search.astar
+        algols.search.producers
+        algols.search.metrics))
 
 (def astar-4-way (new-astar-search-spec
                    (make-4-way-brancher 1)

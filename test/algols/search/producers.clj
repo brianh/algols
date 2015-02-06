@@ -1,4 +1,4 @@
-(ns algols.producers)
+(ns algols.search.producers)
 
 (defn make-4-way-brancher [delta]
   (assert (> delta 0))
