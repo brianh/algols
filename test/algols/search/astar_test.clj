@@ -39,8 +39,3 @@
         (is (= (count (:closed-set r)) 11)))
       (testing "Path contents"
         (is (= (:path r) [[10 0] [10 10]]))))))
-
-(defn test-ns-hook []
-  (simple-4-astar-axis-aligned)
-  (simple-4-theta-star-axis-aligned)
-  )
