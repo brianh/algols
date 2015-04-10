@@ -59,7 +59,10 @@
 
 (defn apply-deltas [m {:keys [added changed removed]}]
   (let [rm (vectorize-keys removed)
-        step1 (apply clojure.core.incubator/dissoc-in m (or (keys rm) []))
+        rm-ks (keys rm)
+        step1 (if (nil? rm-ks)
+                {}
+                (apply clojure.core.incubator/dissoc-in m rm-ks))
         addm (vectorize-keys (or added {}))
         step2 (reduce-kv (fn [m ks v]
                            (assoc-in m ks v)) step1 addm)
