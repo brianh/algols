@@ -1,3 +1,5 @@
+; inspiration taken from Stu Halloway's code in clojure.data ns
+
 (ns algols.data
   (:require [clojure.set :as set]
             [clojure.core.incubator :refer [dissoc-in]]))
@@ -6,12 +8,14 @@
 
 (defn vectorize-keys
   ([m path]
-    (reduce-kv (fn [m k v]
-                 (if (map? v)
-                   (merge m (vectorize-keys v (conj path k)))
-                   (assoc m (conj path k) v)))
-               {}
-               m))
+   (if (and (empty? m) (not-empty path))
+     {path m}
+     (reduce-kv (fn [vm k v]
+                  (if (map? v)
+                    (merge vm (vectorize-keys v (conj path k)))
+                    (assoc vm (conj path k) v)))
+                {}
+                m)))
   ([m]
     (vectorize-keys m [])))
 
@@ -62,7 +66,11 @@
         rm-ks (keys rm)
         step1 (if (nil? rm-ks)
                 {}
-                (apply clojure.core.incubator/dissoc-in m rm-ks))
+                (loop [new-m m
+                       ks rm-ks]
+                  (if (empty? ks)
+                    new-m
+                    (recur (clojure.core.incubator/dissoc-in new-m (first ks)) (rest ks)))))
         addm (vectorize-keys (or added {}))
         step2 (reduce-kv (fn [m ks v]
                            (assoc-in m ks v)) step1 addm)
