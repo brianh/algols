@@ -65,7 +65,7 @@
   (let [rm (vectorize-keys removed)
         rm-ks (keys rm)
         step1 (if (nil? rm-ks)
-                {}
+                m
                 (loop [new-m m
                        ks rm-ks]
                   (if (empty? ks)
